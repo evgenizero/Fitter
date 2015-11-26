@@ -2,5 +2,6 @@
 <resources>
     <declare-styleable name="RegistrationEditText">
         <attr name="text" format="string" />
+        <attr name="hint" format="string" />
     </declare-styleable>
 </resources>

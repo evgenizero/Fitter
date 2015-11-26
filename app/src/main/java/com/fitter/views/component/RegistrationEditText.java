@@ -41,6 +41,7 @@ public class RegistrationEditText extends LinearLayout {
             try {
                 EditText et = (EditText) v.findViewById(R.id.registration_edittext_field);
                 et.setText(a.getString(R.styleable.RegistrationEditText_text));
+                et.setHint(a.getString(R.styleable.RegistrationEditText_hint));
             } finally {
                 a.recycle();
             }

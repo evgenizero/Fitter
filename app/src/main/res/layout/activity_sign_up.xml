@@ -54,33 +54,33 @@
                 android:layout_width="match_parent"
                 android:layout_height="54dp"
                 android:layout_marginBottom="7dp"
-                custom:text="First name" />
+                custom:hint="First name" />
 
             <com.fitter.views.component.RegistrationEditText
                 android:layout_width="match_parent"
                 android:layout_height="54dp"
                 android:layout_marginBottom="7dp"
-                custom:text="Last name" />
-
-
-            <com.fitter.views.component.RegistrationEditText
-                android:layout_width="match_parent"
-                android:layout_height="54dp"
-                android:layout_marginBottom="7dp"
-                custom:text="Email" />
+                custom:hint="Last name" />
 
 
             <com.fitter.views.component.RegistrationEditText
                 android:layout_width="match_parent"
                 android:layout_height="54dp"
                 android:layout_marginBottom="7dp"
-                custom:text="Password" />
+                custom:hint="Email" />
+
 
             <com.fitter.views.component.RegistrationEditText
                 android:layout_width="match_parent"
                 android:layout_height="54dp"
                 android:layout_marginBottom="7dp"
-                custom:text="Repeat password" />
+                custom:hint="Password" />
+
+            <com.fitter.views.component.RegistrationEditText
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:layout_marginBottom="7dp"
+                custom:hint="Repeat password" />
 
             <RelativeLayout
                 android:layout_width="280dp"

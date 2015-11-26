@@ -15,7 +15,7 @@ import butterknife.ButterKnife;
 
 public class LoginActivity extends AppCompatActivity {
 
-    @Bind(R.id.login_bg)
+    @Bind(R.id.login_bkg)
     SimpleDraweeView mLoginBg;
 
     @Bind(R.id.sign_up_btn)
