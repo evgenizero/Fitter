@@ -7,22 +7,45 @@ test:
   override:
     # build the code without pre dex for build speed up
     - ./gradlew app:assembleDebug -PdisablePreDex
-    # execute unit tests
-    - ./gradlew app:test
+
     # start wiremock to support tests with network communication
     - tools/src/main/resources/start-wiremock.sh:
         # start at background to use wiremock in next build steps
         background: true
-    - ./gradlew app:lint
+
+    # execute unit tests
+    - ./gradlew app:test
+
+    # execute data module tests
+    - ./gradlew data:test
+
+    # check lint hints
+    #- ./gradlew app:lint
+
     - circle-android wait-for-boot
     # the necessary sleep duration may change with time and depends on the pre tasks length.
     # When all pre tasks are run long enough then waiting will not be necessary anymore.
     # This sleep should avoid the com.android.builder.testing.api.DeviceException: com.android.ddmlib.ShellCommandUnresponsiveException
-    - sleep 60
+    #- sleep 60
+
     # at least remove the look screen
     - adb shell input keyevent 82
+
     # later we collect the logs from test run
     - adb logcat -d
-    - ./gradlew connectedAndroidTest -PdisablePreDex
-    - cp -r /home/ubuntu/Fitter/app/build/outputs $CIRCLE_ARTIFACTS
-    - cp -r /home/ubuntu/Fitter/app/build/outputs/androidTest-results/* $CIRCLE_TEST_REPORTS
+
+    # Create coverage report
+    - ./gradlew jacocoTestReport
+
+    # copy test results
+    - mv app/build/reports/tests/debug $CIRCLE_TEST_REPORTS/AppUnitTests
+    - mv data/build/reports/tests/debug $CIRCLE_TEST_REPORTS/DataTests
+    - mv build/reports/jacoco/test/html $CIRCLE_TEST_REPORTS/CodeCoverageReport
+
+    # copy lint report
+    - mkdir $CIRCLE_TEST_REPORTS/Lint
+    - mv app/build/outputs/lint-results_files $CIRCLE_TEST_REPORTS/Lint
+    - mv app/build/outputs/lint-results.html $CIRCLE_TEST_REPORTS/Lint/lint-app-results.html
+
+    # copy artifacts
+    - cp -r app/build/outputs $CIRCLE_ARTIFACTS
