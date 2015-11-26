@@ -1,4 +1,10 @@
 test:
   override:
     - ./gradlew assembleDebug -PdisablePreDex
+    - emulator -avd circleci-android22 -no-audio -no-window:
+        background: true
+        parallel: true
+    - circle-android wait-for-boot
+    - ./gradlew connectedAndroidTest
     - cp -r /home/ubuntu/Fitter/app/build/outputs $CIRCLE_ARTIFACTS
+    - cp -r /home/ubuntu/Fitter/app/build/outputs/androidTest-results/* $CIRCLE_TEST_REPORTS
