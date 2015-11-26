@@ -1,10 +1,28 @@
 test:
-  override:
-    - ./gradlew assembleDebug -PdisablePreDex
+  pre:
+    # emulator startup need some minutes that's why start it before first build/text steps for build speed up
     - emulator -avd circleci-android22 -no-audio -no-window:
         background: true
         parallel: true
+  override:
+    # build the code without pre dex for build speed up
+    - ./gradlew app:assembleDebug -PdisablePreDex
+    # execute unit tests
+    - ./gradlew app:test
+    # start wiremock to support tests with network communication
+    - tools/src/main/resources/start-wiremock.sh:
+        # start at background to use wiremock in next build steps
+        background: true
+    - ./gradlew app:lint
     - circle-android wait-for-boot
-    - ./gradlew connectedAndroidTest
+    # the necessary sleep duration may change with time and depends on the pre tasks length.
+    # When all pre tasks are run long enough then waiting will not be necessary anymore.
+    # This sleep should avoid the com.android.builder.testing.api.DeviceException: com.android.ddmlib.ShellCommandUnresponsiveException
+    - sleep 60
+    # at least remove the look screen
+    - adb shell input keyevent 82
+    # later we collect the logs from test run
+    - adb logcat -d
+    - ./gradlew connectedAndroidTest -PdisablePreDex
     - cp -r /home/ubuntu/Fitter/app/build/outputs $CIRCLE_ARTIFACTS
     - cp -r /home/ubuntu/Fitter/app/build/outputs/androidTest-results/* $CIRCLE_TEST_REPORTS
