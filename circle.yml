@@ -20,7 +20,7 @@ test:
     - ./gradlew data:test
 
     # check lint hints
-    #- ./gradlew app:lint
+    - ./gradlew app:lint
 
     #- circle-android wait-for-boot
     # the necessary sleep duration may change with time and depends on the pre tasks length.
