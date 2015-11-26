@@ -1,5 +1,4 @@
 test:
   override:
-    - ./gradlew assembleDebug
+    - ./gradlew assembleDebug -PdisablePreDex
     - cp -r /home/ubuntu/Fitter/app/build/outputs $CIRCLE_ARTIFACTS
-    - adb install $CIRCLE_ARTIFACTS/app-debug.apk
