@@ -1,9 +1,9 @@
 test:
   pre:
     # emulator startup need some minutes that's why start it before first build/text steps for build speed up
-    - emulator -avd circleci-android22 -no-audio -no-window:
-        background: true
-        parallel: true
+    #- emulator -avd circleci-android22 -no-audio -no-window:
+    #    background: true
+    #    parallel: true
   override:
     # build the code without pre dex for build speed up
     - ./gradlew app:assembleDebug -PdisablePreDex
@@ -22,29 +22,29 @@ test:
     # check lint hints
     #- ./gradlew app:lint
 
-    - circle-android wait-for-boot
+    #- circle-android wait-for-boot
     # the necessary sleep duration may change with time and depends on the pre tasks length.
     # When all pre tasks are run long enough then waiting will not be necessary anymore.
     # This sleep should avoid the com.android.builder.testing.api.DeviceException: com.android.ddmlib.ShellCommandUnresponsiveException
     #- sleep 60
 
     # at least remove the look screen
-    - adb shell input keyevent 82
+    #- adb shell input keyevent 82
 
     # later we collect the logs from test run
-    - adb logcat -d
+    #- adb logcat -d
 
     # Create coverage report
-    - ./gradlew jacocoTestReport
+    #- ./gradlew jacocoTestReport
 
     # copy test results
     - mv app/build/reports/tests/debug $CIRCLE_TEST_REPORTS/AppUnitTests
     - mv data/build/reports/tests/debug $CIRCLE_TEST_REPORTS/DataTests
-    - mv build/reports/jacoco/test/html $CIRCLE_TEST_REPORTS/CodeCoverageReport
+    #- mv build/reports/jacoco/test/html $CIRCLE_TEST_REPORTS/CodeCoverageReport
 
     # copy lint report
     - mkdir $CIRCLE_TEST_REPORTS/Lint
-    - mv app/build/outputs/lint-results_files $CIRCLE_TEST_REPORTS/Lint
+    - mv app/build/outputs/lint-results.xml $CIRCLE_TEST_REPORTS/Lint/lint-app-results.xml
     - mv app/build/outputs/lint-results.html $CIRCLE_TEST_REPORTS/Lint/lint-app-results.html
 
     # copy artifacts
