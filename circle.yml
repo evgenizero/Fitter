@@ -1,10 +1,5 @@
 test:
-  pre:
-    - emulator -avd circleci-android22 -no-audio -no-window:
-        background: true
-        parallel: true
-    - circle-android wait-for-boot
   override:
     - ./gradlew assembleDebug
     - cp -r /home/ubuntu/Fitter/app/build/outputs $CIRCLE_ARTIFACTS
-    - adb install /home/ubuntu/Fitter/app/build/outputs/app-debug.apk
+    - adb install $CIRCLE_ARTIFACTS/app-debug.apk
