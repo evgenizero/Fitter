@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.fitter.R;
+import com.kogitune.activity_transition.ActivityTransitionLauncher;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -36,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
-                startActivity(intent);
+                ActivityTransitionLauncher.with(LoginActivity.this).from(v).launch(intent);
             }
         });
 

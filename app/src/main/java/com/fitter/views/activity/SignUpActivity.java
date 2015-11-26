@@ -7,6 +7,8 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.fitter.R;
+import com.kogitune.activity_transition.ActivityTransition;
+import com.kogitune.activity_transition.ExitActivityTransition;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -21,6 +23,8 @@ public class SignUpActivity extends Activity {
     @Bind(R.id.app_title)
     TextView mAppTitle;
 
+    private ExitActivityTransition exitTransition;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +32,14 @@ public class SignUpActivity extends Activity {
 
         ButterKnife.bind(this);
 
+        exitTransition = ActivityTransition.with(getIntent()).to(mAppTitle).start(savedInstanceState);
+
         mAppTitle.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/grand_hotel.ttf"));
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        exitTransition.exit(this);
     }
 }
