@@ -19,88 +19,94 @@
         android:layout_height="match_parent"
         android:background="#88444444" />
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.45">
-
-            <TextView
-                android:id="@+id/app_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="50dp"
-                android:gravity="center"
-                android:text="Fitter"
-                android:textColor="@android:color/white"
-                android:textSize="90sp"
-                android:transitionName="app_title" />
-
-        </RelativeLayout>
+        android:fillViewport="true">
 
         <LinearLayout
-            android:layout_width="280dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <com.fitter.views.component.RegistrationEditText
-                android:layout_width="match_parent"
-                android:layout_height="54dp"
-                android:layout_marginBottom="7dp"
-                custom:hint="First name" />
-
-            <com.fitter.views.component.RegistrationEditText
-                android:layout_width="match_parent"
-                android:layout_height="54dp"
-                android:layout_marginBottom="7dp"
-                custom:hint="Last name" />
-
-
-            <com.fitter.views.component.RegistrationEditText
-                android:layout_width="match_parent"
-                android:layout_height="54dp"
-                android:layout_marginBottom="7dp"
-                custom:hint="Email" />
-
-
-            <com.fitter.views.component.RegistrationEditText
-                android:layout_width="match_parent"
-                android:layout_height="54dp"
-                android:layout_marginBottom="7dp"
-                custom:hint="Password" />
-
-            <com.fitter.views.component.RegistrationEditText
-                android:layout_width="match_parent"
-                android:layout_height="54dp"
-                android:layout_marginBottom="7dp"
-                custom:hint="Repeat password" />
-
             <RelativeLayout
-                android:layout_width="280dp"
-                android:layout_height="54dp"
-                android:layout_gravity="center"
-                android:background="@drawable/login_transparent_style">
+                android:layout_width="match_parent"
+                android:paddingBottom="10dp"
+                android:layout_height="170dp">
 
                 <TextView
-                    android:id="@+id/sign_up_btn"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="Sign up"
-                    android:textColor="@android:color/white" />
+                    android:id="@+id/app_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentBottom="true"
+                    android:text="Fitter"
+                    android:textColor="@android:color/white"
+                    android:textSize="90sp"
+                    android:transitionName="app_title" />
 
             </RelativeLayout>
 
+            <LinearLayout
+                android:layout_width="280dp"
+                android:layout_height="0dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <com.fitter.views.component.RegistrationEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:layout_marginBottom="7dp"
+                    custom:hint="First name" />
+
+                <com.fitter.views.component.RegistrationEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:layout_marginBottom="7dp"
+                    custom:hint="Last name" />
+
+
+                <com.fitter.views.component.RegistrationEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:layout_marginBottom="7dp"
+                    custom:hint="Email" />
+
+
+                <com.fitter.views.component.RegistrationEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:layout_marginBottom="7dp"
+                    custom:hint="Password" />
+
+                <com.fitter.views.component.RegistrationEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:layout_marginBottom="7dp"
+                    custom:hint="Repeat password" />
+
+                <RelativeLayout
+                    android:layout_width="280dp"
+                    android:layout_height="54dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/login_transparent_style">
+
+                    <TextView
+                        android:id="@+id/sign_up_btn"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="Sign up"
+                        android:textColor="@android:color/white" />
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
 
         </LinearLayout>
 
-    </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>
