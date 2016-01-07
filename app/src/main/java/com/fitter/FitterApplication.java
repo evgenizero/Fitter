@@ -10,12 +10,15 @@ import com.fitter.internal.di.components.ApplicationComponent;
 import com.fitter.internal.di.components.DaggerApplicationComponent;
 import com.fitter.internal.di.modules.ApplicationModule;
 
+import entities.User;
+
 /**
  * Created by evgeniy.yanev on 11/21/15.
  */
 public class FitterApplication extends Application {
 
     private ApplicationComponent applicationComponent;
+    private User currentUser;
 
     @Override
     public void onCreate() {
@@ -36,5 +39,13 @@ public class FitterApplication extends Application {
 
     public ApplicationComponent getApplicationComponent() {
         return applicationComponent;
+    }
+
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
+    }
+
+    public User getCurrentUser() {
+        return currentUser;
     }
 }

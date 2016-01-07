@@ -1,8 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'me.tatarka.retrolambda'
-
-
+apply plugin: 'com.fernandocejas.frodo'
 
 android {
     compileSdkVersion 23
@@ -54,6 +53,7 @@ dependencies {
     apt 'com.google.dagger:dagger-compiler:2.0.2'
     provided 'javax.annotation:jsr250-api:1.0'
     compile 'com.facebook.android:facebook-android-sdk:4.6.0'
+    compile 'io.reactivex:rxjava:1.0.14'
     compile 'io.reactivex:rxandroid:1.1.0'
     compile 'com.facebook.stetho:stetho:1.2.0'
     compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'

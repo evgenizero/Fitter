@@ -8,6 +8,7 @@ public class UserModel {
     private String lastName;
     private String email;
     private String password;
+    private String registrationId;
 
     public String getFirstName() {
         return firstName;
@@ -40,4 +41,13 @@ public class UserModel {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getRegistrationId() {
+        return registrationId;
+    }
+
+    public void setRegistrationId(String registrationId) {
+        this.registrationId = registrationId;
+    }
 }
+

@@ -16,6 +16,7 @@ public class UserModelToUser {
             user.setFirstName(userModel.getFirstName());
             user.setLastName(userModel.getLastName());
             user.setEmail(userModel.getEmail());
+            user.setRegistrationId(userModel.getRegistrationId());
         }
 
         return user;

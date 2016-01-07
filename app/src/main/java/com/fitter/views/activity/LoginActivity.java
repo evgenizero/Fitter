@@ -14,6 +14,8 @@ import com.facebook.FacebookException;
 import com.facebook.GraphRequest;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.fernandocejas.frodo.annotation.RxLogSubscriber;
+import com.fitter.FitterApplication;
 import com.fitter.R;
 import com.fitter.mapper.UserModelToUser;
 import com.fitter.model.UserModel;
@@ -26,7 +28,10 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import entities.User;
 import interactors.CreateUser;
+import interactors.DefaultSubscriber;
+import interactors.UseCase;
 import repositories.UserDataRepository;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -40,6 +45,8 @@ public class LoginActivity extends AppCompatActivity {
     FacebookCallback<LoginResult> mFacebookCallback;
     LoginManager mLoginManager;
     List<String> mPermissions = Arrays.asList("email", "user_friends", "public_profile", "user_birthday");
+
+    private UseCase createUserUseCase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,12 +65,16 @@ public class LoginActivity extends AppCompatActivity {
                     Log.v("LoginActivity", response.toString());
                     try {
                         String email = object.getString("email");
-
+                        String name = object.getString("name");
+                        String registrationId = object.getString("id");
 
                         UserModel userModel = new UserModel();
+                        userModel.setFirstName(name);
                         userModel.setEmail(email);
+                        userModel.setRegistrationId(registrationId);
 
-                        new CreateUser(new UserDataRepository(), UserModelToUser.transform(userModel), Schedulers.newThread(), AndroidSchedulers.mainThread());
+                        createUserUseCase = new CreateUser(new UserDataRepository(), UserModelToUser.transform(userModel), Schedulers.newThread(), AndroidSchedulers.mainThread());
+                        createUserUseCase.execute(new CreateUserSubscriber());
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -114,5 +125,29 @@ public class LoginActivity extends AppCompatActivity {
         mLoginManager.logInWithReadPermissions(this, mPermissions);
     }
 
+    @RxLogSubscriber
+    private final class CreateUserSubscriber extends DefaultSubscriber<User> {
+
+        @Override public void onCompleted() {
+
+        }
+
+        @Override public void onError(Throwable e) {
+        }
+
+        @Override public void onNext(User user) {
+            ((FitterApplication) getApplication()).setCurrentUser(user);
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (createUserUseCase != null) {
+            createUserUseCase.unsubscribe();
+        }
+    }
 }
 

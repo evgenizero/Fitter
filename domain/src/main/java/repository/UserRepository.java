@@ -8,5 +8,5 @@ import rx.Observable;
  */
 public interface UserRepository {
     Observable<User> user(final String email);
-    Observable<Void> createUser(User user);
+    Observable<User> createUser(User user);
 }

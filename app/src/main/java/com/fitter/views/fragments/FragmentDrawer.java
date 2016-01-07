@@ -1,6 +1,7 @@
 package com.fitter.views.fragments;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
@@ -14,12 +15,17 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.fitter.FitterApplication;
 import com.fitter.R;
 import com.fitter.model.NavDrawerItem;
 import com.fitter.views.adapter.NavigationDrawerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * Created by evgeniy.yanev on 11/28/15.
@@ -35,6 +41,9 @@ public class FragmentDrawer extends Fragment {
     private View containerView;
     private static String[] titles = null;
     private FragmentDrawerListener drawerListener;
+
+    @Bind(R.id.profile_image)
+    SimpleDraweeView mProfileImage;
 
     public FragmentDrawer() {
 
@@ -65,11 +74,21 @@ public class FragmentDrawer extends Fragment {
         titles = getActivity().getResources().getStringArray(R.array.nav_drawer_labels);
     }
 
+    private void loadProfileImage() {
+        String userID = ((FitterApplication)getActivity().getApplication()).getCurrentUser().getRegistrationId();
+        Uri uri = Uri.parse("https://graph.facebook.com/" + userID + "/picture?type=large");
+        mProfileImage.setImageURI(uri);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflating view layout
         View layout = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
+        ButterKnife.bind(this, layout);
+
+        loadProfileImage();
+
         recyclerView = (RecyclerView) layout.findViewById(R.id.drawerList);
 
         adapter = new NavigationDrawerAdapter(getActivity(), getData());

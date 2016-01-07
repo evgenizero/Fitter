@@ -9,6 +9,9 @@ import com.activeandroid.annotation.Table;
  */
 @Table(name = "Users")
 public class UserEntity extends Model {
+    @Column(name = "registration_id")
+    public String registrationId;
+
     @Column(name = "first_name")
     public String firstName;
 

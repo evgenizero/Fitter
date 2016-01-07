@@ -5,6 +5,7 @@ package entities;
  */
 public class User {
     private long id;
+    private String registrationId;
     private String firstName;
     private String lastName;
     private String email;
@@ -43,5 +44,13 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getRegistrationId() {
+        return registrationId;
+    }
+
+    public void setRegistrationId(String registrationId) {
+        this.registrationId = registrationId;
     }
 }

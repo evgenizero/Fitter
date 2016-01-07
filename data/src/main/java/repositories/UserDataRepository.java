@@ -49,9 +49,38 @@ public class UserDataRepository implements UserRepository {
     }
 
     @Override
-    public Observable<Void> createUser(User user) {
-        UserEntity userEntity = userEntityDataMapper.transform(user);
-        userEntity.save();
-        return null;
+    public Observable<User> createUser(final User user) {
+        return Observable.create(new Observable.OnSubscribe<UserEntity>() {
+            @Override
+            public void call(Subscriber<? super UserEntity> subscriber) {
+                UserEntity userEntity;
+                // first check if DB contains such a user by registration_id
+                userEntity = new Select()
+                        .from(UserEntity.class)
+                        .where("registration_id = ?", user.getRegistrationId())
+                        .executeSingle();
+
+                Long id;
+                if (userEntity == null) {
+                    userEntity = userEntityDataMapper.transform(user);
+                    id = userEntity.save();
+                } else {
+                    id = userEntity.getId();
+                }
+
+                if (id > 0) {
+                    subscriber.onNext(userEntity);
+                } else {
+                    subscriber.onError(new Exception("Could not create user"));
+                }
+
+                subscriber.onCompleted();
+            }
+        }).map(new Func1<UserEntity, User>() {
+            @Override
+            public User call(UserEntity userEntity) {
+                return userEntityDataMapper.transform(userEntity);
+            }
+        });
     }
 }

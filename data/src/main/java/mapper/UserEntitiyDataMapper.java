@@ -14,6 +14,7 @@ public class UserEntitiyDataMapper {
             user.setFirstName(userEntity.firstName);
             user.setLastName(userEntity.lastName);
             user.setEmail(userEntity.email);
+            user.setRegistrationId(userEntity.registrationId);
         }
 
         return user;
@@ -26,6 +27,7 @@ public class UserEntitiyDataMapper {
             userEntity.firstName = user.getFirstName();
             userEntity.lastName = user.getLastName();
             userEntity.email = user.getEmail();
+            userEntity.registrationId = user.getRegistrationId();
         }
 
         return userEntity;
