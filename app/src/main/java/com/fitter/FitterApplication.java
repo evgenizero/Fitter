@@ -2,8 +2,10 @@ package com.fitter;
 
 import android.app.Application;
 
+import com.activeandroid.ActiveAndroid;
 import com.facebook.FacebookSdk;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.stetho.Stetho;
 import com.fitter.internal.di.components.ApplicationComponent;
 import com.fitter.internal.di.components.DaggerApplicationComponent;
 import com.fitter.internal.di.modules.ApplicationModule;
@@ -21,6 +23,8 @@ public class FitterApplication extends Application {
 
         Fresco.initialize(this);
         FacebookSdk.sdkInitialize(getApplicationContext());
+        Stetho.initializeWithDefaults(this);
+        ActiveAndroid.initialize(this);
         initInjector();
     }
 

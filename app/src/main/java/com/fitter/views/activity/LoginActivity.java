@@ -12,13 +12,13 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.fitter.R;
+import com.fitter.mapper.UserModelToUser;
+import com.fitter.model.UserModel;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.Arrays;
 import java.util.List;
@@ -26,6 +26,10 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import interactors.CreateUser;
+import repositories.UserDataRepository;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -49,17 +53,20 @@ public class LoginActivity extends AppCompatActivity {
         mFacebookCallback = new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
-                    @Override
-                    public void onCompleted(JSONObject object, GraphResponse response) {
-                        // Application code
-                        Log.v("LoginActivity", response.toString());
-                        try {
-                            String email = object.getString("email");
-                            Log.v("LoginActivity", "obtained email: " + email);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), (object, response) -> {
+                    // Application code
+                    Log.v("LoginActivity", response.toString());
+                    try {
+                        String email = object.getString("email");
+
+
+                        UserModel userModel = new UserModel();
+                        userModel.setEmail(email);
+
+                        new CreateUser(new UserDataRepository(), UserModelToUser.transform(userModel), Schedulers.newThread(), AndroidSchedulers.mainThread());
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
                 });
                 Bundle params = new Bundle();
@@ -98,9 +105,12 @@ public class LoginActivity extends AppCompatActivity {
 
     @OnClick(R.id.login_btn)
     public void onLoginBtnClick() {
-//        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-//        startActivity(intent);
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(intent);
+    }
 
+    @OnClick(R.id.login_fb_btn)
+    public void onLoginFbBtnClick() {
         mLoginManager.logInWithReadPermissions(this, mPermissions);
     }
 
