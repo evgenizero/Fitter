@@ -137,6 +137,7 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override public void onNext(User user) {
             ((FitterApplication) getApplication()).setCurrentUser(user);
+
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
         }

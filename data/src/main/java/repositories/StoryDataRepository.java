@@ -24,9 +24,9 @@ public class StoryDataRepository implements StoryRepository {
     }
 
     @Override
-    public Observable<List<Story>> stories(String registrationId) {
+    public Observable<List<Story>> stories(long userId) {
         StoryDataStore dbDataStore = storyDataStoreFactory.createDBDataStore();
-        return dbDataStore.stories(registrationId)
+        return dbDataStore.stories(userId)
                 .map(new Func1<List<StoryEntity>, List<Story>>() {
                     @Override
                     public List<Story> call(List<StoryEntity> storyEntities) {
@@ -38,5 +38,29 @@ public class StoryDataRepository implements StoryRepository {
     @Override
     public Observable<Story> story(long storyId) {
         return null;
+    }
+
+    @Override
+    public Observable<List<Story>> createStories(List<Story> stories) {
+        StoryDataStore dbDataStore = storyDataStoreFactory.createDBDataStore();
+        return dbDataStore.createStories(storyEntityDataMapper.transformToEntity(stories))
+                .map(new Func1<List<StoryEntity>, List<Story>>() {
+                    @Override
+                    public List<Story> call(List<StoryEntity> storyEntities) {
+                        return storyEntityDataMapper.transform(storyEntities);
+                    }
+                });
+    }
+
+    @Override
+    public Observable<Story> createStory(Story story) {
+        StoryDataStore dbDataStore = storyDataStoreFactory.createDBDataStore();
+        return dbDataStore.createStory(storyEntityDataMapper.transform(story))
+                .map(new Func1<StoryEntity, Story>() {
+                    @Override
+                    public Story call(StoryEntity storyEntity) {
+                        return storyEntityDataMapper.transform(storyEntity);
+                    }
+                });
     }
 }

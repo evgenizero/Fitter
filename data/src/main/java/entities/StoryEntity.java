@@ -4,6 +4,7 @@ import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -12,18 +13,18 @@ import java.util.List;
 @Table(name = "Stories")
 public class StoryEntity extends Model {
     @Column(name = "registration_user")
-    public User registrationUser;
+    public Long registrationUser;
 
     @Column(name = "created_by_user")
-    public User createdByUser;
+    public Long createdByUser;
 
     @Column(name = "createdDate")
-    public String createdDate;
+    public Date createdDate;
 
     @Column(name = "text")
     public String text;
 
-    @Column(name = "attachment_urls")
-    public List<String> attachmentUrls;
-
+    public List<AttachmentEntity> attachmentEntities() {
+        return getMany(AttachmentEntity.class, "story");
+    }
 }

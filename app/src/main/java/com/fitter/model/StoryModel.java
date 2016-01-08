@@ -1,23 +1,25 @@
-package entities;
+package com.fitter.model;
 
 import java.util.Date;
 import java.util.List;
 
+import entities.User;
+
 /**
- * Created by evgeniy.yanev on 1/7/16.
+ * Created by evgeniy.yanev on 1/8/16.
  */
-public class Story {
-    long registrationUser;
-    long createdByUser;
+public class StoryModel {
+    User registrationUser;
+    User createdByUser;
     Date createdDate;
     String text;
     List<String> attachmentUrls;
 
-    public long getCreatedByUser() {
+    public User getCreatedByUser() {
         return createdByUser;
     }
 
-    public void setCreatedByUser(long createdByUser) {
+    public void setCreatedByUser(User createdByUser) {
         this.createdByUser = createdByUser;
     }
 
@@ -45,11 +47,11 @@ public class Story {
         this.attachmentUrls = attachmentUrls;
     }
 
-    public long getRegistrationUser() {
+    public User getRegistrationUser() {
         return registrationUser;
     }
 
-    public void setRegistrationUser(long registrationUser) {
+    public void setRegistrationUser(User registrationUser) {
         this.registrationUser = registrationUser;
     }
 }
