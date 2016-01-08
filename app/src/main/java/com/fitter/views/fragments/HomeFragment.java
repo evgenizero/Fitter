@@ -19,7 +19,7 @@ import com.fitter.mapper.StoryModelMapper;
 import com.fitter.views.adapter.StoriesAdapter;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import butterknife.Bind;
@@ -68,11 +68,13 @@ public class HomeFragment extends Fragment {
             Log.d("HomeFragment", "no stories found, first create some");
             List<Story> stories = new ArrayList<>();
             Story story;
+            Calendar cal = Calendar.getInstance();
             for (int i = 0; i < 100; i++) {
                 story = new Story();
                 story.setText("Story text " + i);
                 story.setRegistrationUser(((FitterApplication)getActivity().getApplication()).getCurrentUser().getId());
-                story.setCreatedDate(new Date());
+                story.setCreatedDate(cal.getTime());
+                cal.add(Calendar.DATE, -1);
                 story.setCreatedByUser(story.getRegistrationUser());
                 story.setAttachmentUrls(new ArrayList<>());
                 stories.add(story);
