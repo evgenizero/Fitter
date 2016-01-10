@@ -5,7 +5,7 @@ import com.activeandroid.query.Select;
 import entities.User;
 import entities.UserEntity;
 import mapper.UserEntitiyDataMapper;
-import repositories.datasource.UserDataStoreFactory;
+import repositories.datasource.user.UserDataStoreFactory;
 import repository.UserRepository;
 import rx.Observable;
 import rx.Subscriber;
@@ -22,6 +22,11 @@ public class UserDataRepository implements UserRepository {
     public UserDataRepository() {
         userDataStoreFactory = new UserDataStoreFactory();
         userEntityDataMapper = new UserEntitiyDataMapper();
+    }
+
+    @Override
+    public Observable<User> registerUser(User user) {
+        return null;
     }
 
     @Override

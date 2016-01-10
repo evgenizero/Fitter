@@ -1,4 +1,4 @@
-package repositories.datasource;
+package repositories.datasource.story;
 
 import java.util.List;
 

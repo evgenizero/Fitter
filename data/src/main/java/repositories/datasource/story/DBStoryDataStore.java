@@ -1,4 +1,4 @@
-package repositories.datasource;
+package repositories.datasource.story;
 
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Select;

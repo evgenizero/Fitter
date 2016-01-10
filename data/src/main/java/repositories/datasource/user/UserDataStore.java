@@ -1,4 +1,4 @@
-package repositories.datasource;
+package repositories.datasource.user;
 
 import entities.UserEntity;
 import rx.Observable;
